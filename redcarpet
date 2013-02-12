@@ -44,7 +44,7 @@ end
 # Turn off output if requested
 unless OUTPUT_STATUS_MESSAGES
   $stdout = Object.new
-  def $stdout.write
+  def $stdout.write *args
   end
   $stderr = $stdout
 end
