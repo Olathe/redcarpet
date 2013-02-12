@@ -3,9 +3,10 @@
 * `redcarpet.conf` is an Upstart script. It allows you to run `redcarpet` as a system service.
 
 #### Installing as an Upstart service
-To install it, switch to the directory containing these files and run:
+To install it, open a shell, switch to the directory containing these files, edit `redcarpet` to make it work for your access point, and execute the following:
 
 ```sh
+emacs redcarpet # edit redcarpet script so that it works properly
 sudo adduser --system --home /nonexistent --shell /bin/false --no-create-home --disabled-password --disabled-login redcarpet
 sudo cp redcarpet /usr/local/bin/
 sudo cp redcarpet.conf /etc/init/
