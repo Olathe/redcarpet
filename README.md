@@ -1,5 +1,5 @@
 #### Files
-* `redcarpet` handles the passwordless login page for a WiFi router. You'll need to edit it to handle the proper SSID and URL.
+* `redcarpet` automatically accepts the recurring terms-of-service web page for a WiFi router. You'll need to edit it to handle the proper SSID and URL.
 * `redcarpet.conf` is an Upstart script. It allows you to run `redcarpet` as a system service.
 
 #### Installing as an Upstart service
