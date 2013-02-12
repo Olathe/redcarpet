@@ -43,10 +43,9 @@ end
 
 # Turn off output if requested
 unless OUTPUT_STATUS_MESSAGES
-  $stdout = Object.new
-  def $stdout.write *args
-  end
-  $stderr = $stdout
+  NULL = Object.new
+  def NULL.write *args; end
+  $stderr = $stdout = NULL
 end
 
 loop do
