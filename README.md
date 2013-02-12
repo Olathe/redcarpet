@@ -1,5 +1,6 @@
 #### Files
 * `redcarpet` automatically accepts the recurring terms-of-service web page for a WiFi router. You'll need to edit it to handle the proper SSID and URL.
+* `redcarpet.bat` starts `redcarpet` on Windows.
 * `redcarpet.conf` is an Upstart script. It allows you to run `redcarpet` as a system service.
 
 #### Installing as an Upstart service
