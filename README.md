@@ -1,7 +1,6 @@
 #### Files
-`redcarpet` handles the passwordless login page for a WiFi router. You'll need to edit it to handle the proper SSID and URL.
-
-`redcarpet.conf` is an Upstart script. It allows you to run `redcarpet` as a system service.
+* `redcarpet` handles the passwordless login page for a WiFi router. You'll need to edit it to handle the proper SSID and URL.
+* `redcarpet.conf` is an Upstart script. It allows you to run `redcarpet` as a system service.
 
 #### Installing as an Upstart service
 To install it, switch to the directory containing these files and run:
