@@ -1,0 +1,39 @@
+#!/usr/bin/ruby
+
+SSID = 'RedCarpetInn'
+
+require 'open3'
+require 'open-uri'
+
+def get_ssid
+  begin
+    # Handle Linux
+    a = Open3.capture2e('iwconfig').first.scan(/ESSID:"(.+?)"/)
+  rescue Errno::ENOENT
+    begin
+      # Handle Windows
+      a = Open3.capture2e('netsh wlan show interfaces').first.scan(/ SSID\s+: (.+?)\n/)
+    rescue
+      # Handle failure
+      a = []
+    end
+  end
+  a.empty? ? nil : a.first.first
+end
+
+loop do
+  print "[#{ Time.now }] "
+  begin
+    if get_ssid == SSID
+      print "Attempting login..."
+      open('http://192.168.17.1:3456/Login?ticket=Free') do |f|
+        puts((f.status.first == '200') ? "success" : "FAIL!")
+      end
+    else
+      puts "Not connected to #{ SSID }"
+    end
+  rescue Exception => e
+    $stderr.puts e.inspect
+  end
+  sleep 15
+end
