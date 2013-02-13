@@ -37,7 +37,7 @@ def get_ssid
       result = []
     end
   end
-  result.empty? ? nil : a.first.first
+  result.empty? ? nil : result.first.first
 end
 
 loop do
