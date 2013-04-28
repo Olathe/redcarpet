@@ -42,20 +42,32 @@ def get_ssid
   result.empty? ? nil : result.first.first
 end
 
+next_ssid_check     = Time.now.to_i
+next_tos_acceptance = 1.0/0.0
+was_disconnected = true
 loop do
-  print "[#{ Time.now }] "
   begin
-    if get_ssid == SSID
-      print "Accepting terms of service..."
+    if Time.now.to_i >= next_ssid_check
+      if get_ssid == SSID
+        next_tos_acceptance = Time.now.to_i if was_disconnected
+        was_disconnected = false
+      else
+        puts "[#{ Time.now }] Not connected to #{ SSID }"
+        next_tos_acceptance = 1.0/0.0
+        was_disconnected = true
+      end
+      next_ssid_check = Time.now.to_i + TIME_BETWEEN_SSID_CHECKS_IN_SECONDS
+    end
+    
+    if Time.now.to_i >= next_tos_acceptance
+      print "[#{ Time.now }] Accepting terms of service..."
       open(ACCEPT_TERMS_URL) do |f|
         puts((f.status.first == '200') ? "success" : "FAIL!")
       end
-      sleep TIME_BETWEEN_TOS_ACCEPTANCES_IN_SECONDS
-    else
-      puts "Not connected to #{ SSID }"
-      sleep TIME_BETWEEN_SSID_CHECKS_IN_SECONDS
+      next_tos_acceptance = Time.now.to_i + TIME_BETWEEN_TOS_ACCEPTANCES_IN_SECONDS
     end
   rescue Exception => e
     $stderr.puts e.inspect
   end
+  sleep 1
 end
