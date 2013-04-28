@@ -17,9 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with redcarpet.  If not, see <http://www.gnu.org/licenses/>.
 
-TIME_BETWEEN_TRIES_IN_SECONDS = 15
-SSID                          = 'RedCarpetInn'
-ACCEPT_TERMS_URL              = 'http://192.168.17.1:3456/Login?ticket=Free'
+TIME_BETWEEN_TOS_ACCEPTANCES_IN_SECONDS = 120
+TIME_BETWEEN_SSID_CHECKS_IN_SECONDS     = 10
+
+SSID             = 'RedCarpetInn'
+ACCEPT_TERMS_URL = 'http://192.168.17.1:3456/Login?ticket=Free'
 
 require 'open3'
 require 'open-uri'
@@ -48,11 +50,12 @@ loop do
       open(ACCEPT_TERMS_URL) do |f|
         puts((f.status.first == '200') ? "success" : "FAIL!")
       end
+      sleep TIME_BETWEEN_TOS_ACCEPTANCES_IN_SECONDS
     else
       puts "Not connected to #{ SSID }"
+      sleep TIME_BETWEEN_SSID_CHECKS_IN_SECONDS
     end
   rescue Exception => e
     $stderr.puts e.inspect
   end
-  sleep TIME_BETWEEN_TRIES_IN_SECONDS
 end
